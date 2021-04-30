@@ -4,6 +4,6 @@ class User {
     this.username = username;
     this.fullname = fullname;
     this.email = email;
-    this.eventID = [];
+    this.broads = [];
   }
 }

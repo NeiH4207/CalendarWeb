@@ -5,55 +5,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,600,700,700i&amp;subset=latin-ext"
-        rel="stylesheet">
-    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
-    <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
-    <link href="/stylesheets/swiper.css" rel="stylesheet">
-    <link href="/stylesheets/magnific-popup.css" rel="stylesheet">
-    <link href="/stylesheets/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/login.css" />
     <title>Sign in & Sign up Form</title>
     <!-- Favicon  -->
-    <link rel="icon" href="images/icon_2.png">
+    <link rel="icon" href="images/icon.svg">
 </head>
-<script>
-    function hindElert() {
-        $(".alert.alert-success").css("display", "none");
-    }
-    setTimeout(hindElert, 3000)
-</script>
-
-<body>
-    <% include ./includes/menu-guest.ejs %>
-
-    <div class="container">
+<body style="background-color: #8FBC8F;">
+    <div class="container" style="background-color: #8FBC8F;">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="/auth" class="sign-in-form" method="POST">
-                    <% if(thongBao) { %>
-                        <div class="alert alert-success">
-                            <strong style='color:<%= color %>'>
-                                <%= thongBao %>
-                            </strong>
-                        </div>
-                        <% } %>
-                            <h2 class="title">Sign in</h2>
-                            <div class="input-field">
-                                <i class="fas fa-user"></i>
-                                <input type="text" name="username" placeholder="Username" required />
-                            </div>
-                            <div class="input-field">
-                                <i class="fas fa-lock"></i>
-                                <input type="password" name="password" placeholder="Password" required />
-                            </div>
-                            <input type="submit" value="Login" class="btn solid" />
+                <form action="auth" class="sign-in-form" method="POST">
+                    <h2 class="title" style="color:#fff;">Sign in</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="username" placeholder="Username" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" required />
+                    </div>
+                    <input type="submit" value="Login" class="btn solid" style="background-color: #167e56;" />
 
-                            <a href="/forgot" class="forgot">Forgot Password</a>
+                    <a href="/forgot" class="forgot" style="color: #fff; font-weight: bold;">Forgot Password</a>
                 </form>
 
                 <form action="register" class="sign-up-form" id='form-1' method="POST">
-                    <h2 class="title">Sign up</h2>
+                    <h2 class="title" style="color: #fff;" >Sign up</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
                         <input id="fullname" type="text" placeholder="UserName" name="username" required />
@@ -62,6 +39,11 @@
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
                         <input id="email" type="email" placeholder="Email" name="email" required />
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-phone"></i>
+                        <input id="phone" type="phone" placeholder="Phone Number" name="phone" required />
                         <span class="form-message"></span>
                     </div>
                     <div class="input-field">
@@ -74,14 +56,14 @@
                         <input id="confirm" type="password" placeholder="confirm" name='confirm' />
                         <span class="form-message"></span>
                     </div>
-                    <input type="submit" class="btn" value="Sign up" />
+                    <input type="submit" class="btn transparent" value="Sign up"/>
                 </form>
             </div>
         </div>
 
-        <div class="panels-container">
+        <div class="panels-container" style="margin-left: -11%; margin-top: -8%;">
             <div class="panel left-panel">
-                <div class="content">
+                <div class="content" style="">
                     <h3 style="color: #fff;">Hello guy!</h3>
                     <p style="color: #fff;">
                         Enter your personal details and start journey with us
@@ -90,9 +72,8 @@
                         Sign up
                     </button>
                 </div>
-                <img src="/images/log.svg" class="image" alt="" />
             </div>
-            <div class="panel right-panel">
+            <div class="panel right-panel" style="margin-right: -15%; margin-top: 8%;">
                 <div class="content">
                     <h3 style="color: #fff;">Welcome Back!</h3>
                     <p style="color: #fff;">
@@ -102,7 +83,6 @@
                         Sign in
                     </button>
                 </div>
-                <img src="/images/register.svg" class="image" alt="" />
             </div>
         </div>
     </div>
@@ -121,10 +101,6 @@
             ]
         });
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="/javascripts/broad.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 </body>
 
 </html>

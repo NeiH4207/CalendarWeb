@@ -176,6 +176,7 @@ a.white {
     font: 700 0.75rem/0 "Raleway", sans-serif;
     text-decoration: none;
     transition: all 0.2s;
+    text-align: center;
 }
 
 .btn-solid-lg:hover {

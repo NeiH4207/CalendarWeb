@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <link rel="stylesheet" href="/stylesheets/home.css" />
+    <!-- Styles -->
+    <script src="/javascripts/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="row"> 
+        <div class = "column-1">
+          <div class="calendar">
+            <div class="month">
+              <i class="fas fa-angle-left prev" style="margin-left: 2rem;"></i>
+              <div class="date">
+                <h1></h1>
+                <p></p>
+              </div>
+              <i class="fas fa-angle-right next" style="margin-right: 2rem;"></i>
+            </div>
+            <div class="weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+            <div class="days"></div>
+            <div class="mycalendar">
+              <div class="row">
+                <h1> 
+                  My calendars
+                  <i class="fas fa-angle-down event-type" style="margin-left: 1em;"></i>
+                </h1>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control control--checkbox"> .
+                <input type="checkbox" checked="checked"/>
+                <div class="control__indicator"></div>
+              </label>
+              <label class="control control--checkbox"> Birthdays
+                <input type="checkbox" checked="checked" id ='birthday'/>
+                <div class="control__indicator"></div>
+              </label>
+              <label class="control control--checkbox" id ='reminder'> Reminders
+                <input type="checkbox" checked="checked"/>
+                <div class="control__indicator"></div>
+              </label>
+              <label class="control control--checkbox" id ='task'> Tasks
+                <input type="checkbox" checked="checked"/>
+                <div class="control__indicator"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- / College Timetable -->
+        <div class="column-2">
+          <table id ='timetable'>
+            <tr class='day' style="font-size: 20px;">
+              <th style="width: 15%;">Time</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Tus</th>
+              <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
+            </tr>
+
+            <tr>
+          </table> <!-- end table -->
+        </div>
+      </div> <!-- end row -->
+    </div> <!-- end container -->
+    
+    <div class="modal" id = "calendar-form">
+    <div id="calendar-popup">
+
+      <form id="event-form" method="post">
+        <div class='calander_popip_title'><i class="fa"  aria-hidden="true"></i>
+          Add Event</div>
+        <ul>
+          <li>
+            <label for="event-start"><i class="fa"  aria-hidden="true"></i>
+
+              Date Time</label>
+            <input id="event-start" class='form-control fa' type="datetime-local" name="start" />
+          </li>
+
+          <li>
+            <label for="event-title"><i class="fa"  aria-hidden="true"></i>
+              Event Name</label>
+            <input id="event-title" class='form-control' type="text" name="title" />
+          </li>
+
+          <li>
+            <label for="event-location"><i class="fa"  aria-hidden="true"></i>
+              Location</label>
+            <input id="event-location" class='form-control' type="text" name="location" />
+          </li>
+
+          <li>
+            <label for="event-details"><i class="fa" aria-hidden="true"></i>
+              Description</label>
+            <textarea id="event-details" class='form-control' name="details"></textarea>
+          </li>
+
+          <button style="width: 82%;"> Submit </button>
+          </div>
+        </ul>
+      </form>
+
+    </div>
+
+    <div id='search_result'>result</div>
+    <button class='btn btn-primary'>Add Events</button>
+
+    <!-- Scripts -->
+    <script src="/javascripts/home.js"></script>
+  </body>
+</html>
