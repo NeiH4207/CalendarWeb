@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <script src="/javascripts/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+</head>
+<body>
+    <% include ./includes/menu_home.ejs %>
+    <div class="profile">
+        <header>
+            <h1>Change</h1>
+        </header>
+        <section>
+            <div class="p_top">
+                <div class="t2">
+                    <h3 class="t21">
+                        Name
+                    </h3>
+                    <div class="t22">
+                        <input type="text" class="input" placeholder="YourName" />
+                    </div>
+                    <i class="fas fa-user t23"></i>
+                </div>
+                <div class="t3">
+                    <h3 class="t31">
+                        Date of Birth
+                    </h3>
+                    <div class="t32">
+                        <input type="text" class="input" placeholder="Add Date of Birth" />
+                    </div>
+                    <i class="fas fa-calendar-day t33"></i>
+                </div>
+                <div class="t4">
+                    <h3 class="t41">
+                        Sex
+                    </h3>
+                    <div class="t42">
+                        <input type="text" class="input" placeholder="" />
+                    </div>
+                    <i class="fas fa-venus-mars t43"></i>
+                </div>
+                <div class="t5">
+                    <h3 class="t51">
+                        Password
+                    </h3>
+                    <div class="t52">
+                        <input type="password" class="input" placeholder="" />
+                    </div>
+                    <i class="fas fa-key t53"></i>
+                </div>
+            </div>
+            <div class="p_bottom">
+                <div class="b1">
+                    <h2>Contact Info</h2>
+                </div>
+                <div class="b2">
+                    <h3 class="b21">
+                        Email
+                    </h3>
+                    <div class="b22">
+                        <input type="email" class="input" placeholder="" />
+                    </div>
+                    <i class="far fa-envelope b23"></i>
+                </div>
+                <div class="b3">
+                    <h3 class="b31">
+                        Phone
+                    </h3>
+                    <div class="b32">
+                        <input type="text" class="input" placeholder="" />
+                    </div>
+                    <i class="fas fa-phone-square-alt b33"></i>
+                </div>
+            </div>
+            <div class="save">
+                <button class="btn1">Cancel</button>
+                <button class="btn2"><a href="/changeprofile">Save</a></button>
+            </div>
+        </section>
+    </div>
+    <script src="../routes/profile.js"></script>
+</body>
+</html>

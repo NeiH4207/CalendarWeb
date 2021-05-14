@@ -131,6 +131,7 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
   }
   return new Array(lunarDay, lunarMonth, lunarYear);
 }
+
 const renderCalendar = (date) => {
   date.setDate(1);
 
@@ -230,6 +231,12 @@ const renderCalendar = (date) => {
   });
 };
 
+function get_username(){
+  return document.getElementById("dataset").dataset.username;
+}
+
+const USERNAME = get_username();
+
 function show_calendar(){
   document.querySelector(".prev").addEventListener("click", () => {
     date.setMonth(date.getMonth() - 1);
@@ -249,131 +256,238 @@ var generated_ID = function () {
   return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 };
 
-function generateTableHead(table, data) {
-  let thead = table.createTHead();
-  let row = thead.insertRow();
-  for (let key of data) {
-    let th = document.createElement("th");
-    let text = document.createTextNode(key);
-    text.
-    th.appendChild(text);
-    row.appendChild(th);
+const cyrb53 = function(str, seed = 0) {
+    let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (let i = 0, ch; i < str.length; i++) {
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1>>>16), 2246822507) ^ Math.imul(h2 ^ (h2>>>13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1>>>0);
+};
+var subcribers = [];
+
+function show_subcriber(subcriber_slidebar){
+
+  axios.post(
+    '/get/SubUser', 
+    {"id1": USERNAME}
+  ).then(function (response) {
+    for (var i = 0; i < response.data.length; i++){
+      subcribers.push(response.data[i]["id2"]);
+      var other_username = subcribers[i];
+      var content = document.createElement("h3");
+      // checkbox.style.marginLeft ;
+      content.style.marginLeft = "28px";
+      content.style.cursor = "pointer";
+      content.innerHTML = "&#9831 " + response.data[i]["id2"];
+      content.dataset["username"] = subcribers[i];
+      content.addEventListener("click", function(){
+        window.location.href = "/friend?username0=" + USERNAME + "&username1=" + this.dataset["username"];
+      })
+      subcriber_slidebar.appendChild(content);
+    }
+  }).catch(function (error) {
+      console.log(error);
+  });
+
+}
+
+let subcriber_slidebar = document.getElementById("subcriber");
+
+show_subcriber(subcriber_slidebar);
+
+function generateTableHead(table) {
+  var day = new Date();
+  var month = day.getMonth() + 1;
+
+  // head.className = 'headtb';
+
+  var row = table.insertRow();
+
+  for (var i = 0; i < 8; i++){
+    var square = row.insertCell();
+    var content = document.createElement("header_timetable");
+    if (i == 0){
+      content.append("Time");
+    square.className = 'time';
+    } else{
+    square.className = 'dayx';
+      content.append(String(day.getDate()) + '/' + String(day.getMonth() + 1));
+      day.setDate(day.getDate() + 1);
+    }
+    square.appendChild(content);
   }
 }
 
+var list_event_id = [];
+var active_id = {};
+var cur_day;
+var cur_ev_id;
+
 function generateTable(table) {
+  var params;
   for (var i = 0; i < 24; i++) {
-    element = { Time: i.toString() + ".00 - " + (i + 1).toString() + ".00", 
-                Mon: "-", Tue: "-", Wed: "-", Tus: "-", Fri: "-", Sat: "-", Sun: "-"};
+    day = new Date();
+    day.setDate(day.getDate() - 1);
     var row = table.insertRow();
-    for (key in element) {
+    for (var j = 0; j < 8; j++) {
       var cell = row.insertCell();
       var text = document.createElement("event");
-      text.id = generated_ID();
-      text.append(element[key]);  
-      if (key == 'Time'){
+      text.id = cyrb53(String(i) + String(day.getDate()));
+
+      if (j == 0){
+        text.append(i.toString() + ".00 - " + (i + 1).toString() + ".00");  
         cell.className = 'event_time';
       } else{
-        cell.addEventListener("click", function(){
-            // Send a POST request
-          // document.getElementById("calendar-form").style.display = "block";
-          // console.log(text.id);
-          const params = {
-            name: "User",
-            startTime: "2:00PM",
-            endTime: "3:00PM",
-            status: "pending",
-            invitation: "test",
-          };
-          let axiosConfig = {
-          headers: {
-              "Content-Type": "application/json;",
-              "Access-Control-Allow-Origin": "*",
-          },
-          };
+          list_event_id.push({"id": text.id, "username": USERNAME});
+          // Send a POST request
+          // params = {
+          //   id: text.id
+          // };
+          cell.addEventListener("click", function(){
+            let id = this.getElementsByTagName("event")[0].id;
+            if (active_id.hasOwnProperty(id)){
+              cur_ev_id = id;
+              const data = active_id[id];
+              let form = document.getElementById("calendar-show-form");
+              var day = data.start
+              var date = new Date(String(day));
+              console.log(id);
+              console.log(data.start);
+              document.getElementById("event-name-info").innerHTML = data.title;
+              document.getElementById("event-time-info").innerHTML = date.toDateString();
+              document.getElementById("event-location-info").innerHTML = data.location;
+              document.getElementById("event-detail-info").innerHTML = data.details;
+              cur_day = day;
+              //a= document.getElementById("event-name-info");
+              form.style.display = "block";
+            } else{
 
-          axios.post(
-            '/home/checkEvent', 
-            params, 
-            axiosConfig
-          ).then(function (response) {
-              if (response.data.length > 0){
-
-              } else {
-                document.getElementById("calendar-form").style.display = "block";
-              }
-              // console.log(response.data);
-              return response.data;
-          }).catch(function (error) {
-              console.log(error);
+                modal.style.display = "block";
+                // document.getElementById("calendar-form").style.display = "none";
+                document.getElementById("event-start").value="";
+                document.getElementById("event-title").value = "";
+                document.getElementById("event-details").value = "";
+                document.getElementById("event-location").value = "";
+            }
           });
 
-        });
-
       }
-
-
-      // console.log(text.id);
       cell.appendChild(text);
+      day.setDate(day.getDate() + 1);
     }
-    // console.log(row);
   }
+  params = {
+    ids : list_event_id
+  };
+
+  axios.post(
+    '/home/getEvents', 
+    params
+  ).then(function (response) {
+      for (var i = 0; i < response.data.length; i++){
+        event = response.data[i];
+        if(event.id){
+          active_id[event.id] = event;
+          document.getElementById(event.id).innerHTML = event.title;
+          // document.getElementById(res.id).style.fontSize = 0;
+        }
+      }
+  }).catch(function (error) {
+      console.log(error);
+  });
+
 }
 
 let table = document.getElementById("timetable");
+generateTableHead(table);
 generateTable(table);
-// let data = Object.keys(mountains[0]);
-// generateTableHead(table, data);
 
 // Get the modal
 var modal = document.getElementById('calendar-form');
+var modal2 = document.getElementById('calendar-show-form');
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
 }
+var createButton = document.getElementById("create_event");
+
+createButton.addEventListener("click", function(){
+  modal.style.display = "block";
+  // document.getElementById("calendar-form").style.display = "none";
+  document.getElementById("event-start").value="";
+  document.getElementById("event-title").value = "";
+  document.getElementById("event-details").value = "";
+  document.getElementById("event-location").value = "";
+});
 
 var formElem = document.getElementById("event-form");
 
 formElem.onsubmit = async (e) => {
   e.preventDefault();
   let data = new FormData(formElem);
-  const value = Object.fromEntries(data.entries());
 
-  var start = value.start;
-  var title = value.title;
-  var location = value.location;
-  var details = value.details;
-  // console.log(start);
-  console.log(value)
-  fetch("/home/addEvent", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: "POST",
-      body: value
-  })
-
+  // console.log(value);
+  var day = new Date(Object.fromEntries(data.entries()).start);
+  var date = day.getDate();
+  var hour = day.getHours();
+  var event_id = cyrb53(String(hour) + String(date));
+  data.append("id", event_id);
+  data.append("username", USERNAME);
+  var value = Object.fromEntries(data.entries());
+  active_id[event_id] = value;
+  if (document.getElementById(event_id)){
+    document.getElementById(event_id).innerHTML = value.title;
+  } else{
+    alert("Create new event in this week, please try again!");
+  }
+  axios.post(
+    "/home/addEvent",
+     value
+  );
   
-  .then(function(res){ console.log(res) })
-  .catch(function(res){ console.log(res) })
-  // document.getElementById("calendar-form").style.display = "none";
-  // axios({
-  //   method: 'post',
-  //   url: '/home/addEvent',
-  //   data:  { foo: "bar", baz: 42 }
-  // }).then(function (response) {
-  //     if (response.data.length > 0){
-
-  //     } else {
-  //       document.getElementById("calendar-form").style.display = "block";
-  //     }
-  //     console.log(response.data);
-  //     return response.data;
-  // }).catch(function (error) {
-  //     console.log(error);
-  // });
+  document.getElementById("calendar-form").style.display = "none";
+  document.getElementById("event-start").value="";
+  document.getElementById("event-title").value = "";
+  document.getElementById("event-details").value = "";
+  document.getElementById("event-location").value = "";
 };
+ 
+var editButton=document.getElementById("ed");
+editButton.addEventListener("click",function(){
+  let form = document.getElementById("calendar-show-form");
+  let cre = document.getElementById("calendar-form");
+    document.getElementById("title_event_form").innerHTML = "Edit Event";
+    document.getElementById("event-title").value = document.getElementById("event-name-info").textContent;
+    document.getElementById("event-start").value = cur_day;
+    document.getElementById("event-location").value = document.getElementById("event-location-info").textContent;
+    document.getElementById("event-details").value = document.getElementById("event-detail-info").textContent;
+    form.style.display="none";
+    cre.style.display = "block";
+
+});
+
+
+document.getElementById("delete_button").addEventListener("click", function(){
+  
+  let form = document.getElementById("calendar-show-form");
+  let id = cur_ev_id;
+  console.log(id);
+  axios.post(
+    "/home/deleteEvent",
+     {"id": id}
+  );
+
+  document.getElementById(id).innerHTML = "";
+  delete active_id[id];
+  form.style.display="none";
+});

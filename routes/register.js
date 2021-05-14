@@ -1,26 +1,21 @@
 var express = require('express')
-var passport = require('passport')
-var session = require('express-session')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var config = require('../configuration/config')
-var mysql = require('mysql');
-var app = express()
-    // thiet lap views va public
-app.set('views', __dirname + '/../views');
-app.set('view engine', 'ejs');
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'keyboard cat', key: 'sid' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(__dirname + '/../public'));
 
+var router = express.Router()
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://hienvq:123321@cluster0.hklcy.mongodb.net/test?retryWrites=true&w=majority";
+var _db;
 
-app.post('/', function(req, res) {
+MongoClient.connect(uri, function(err, db) {
+  if (err) throw err;
+  _db = db.db("CalendarDB");
+}); 
+
+var generated_ID = function () {
+  return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+};
+
+router.post('/addUser', function(req, res) {
     var confirm = req.body.confirm
     var username = req.body.username
     var password = req.body.password
@@ -28,34 +23,30 @@ app.post('/', function(req, res) {
     var email = req.body.email
 
     var data = {
+        "id" : generated_ID,
         "username": username,
         "email":email,
         "password":password,
         "phone":phone
     }
     if (password == confirm){
-        MongoClient.connect(uri, function(err, db) {
-          if (err) throw err;
-          var dbo = db.db("CalendarDB");
-          var query = { username: username};
-          dbo.collection("account").find(query).toArray(function(err, result) {
-            if (err) throw err;
-            if (result.length == 0){
-                dbo.collection('account').insertOne(data,function(err, collection){
-                    if (err) throw err;
-                    console.log("Record inserted Successfully");
-                          
-                });
-                res.render('login', { thongBao: 'Successfully!', color: 'red' })
-            } else {
-            }
-            db.close();
-          });
-        }); 
+      var query = { username: username};
+      _db.collection("account").find(query).toArray(function(err, result) {
+        if (err) throw err;
+        if (result.length == 0){
+            _db.collection('account').insertOne(data,function(err, collection){
+                if (err) throw err;
+                console.log("Record inserted Successfully!");
+                      
+            });
+            res.render('home', data);
+        } else {
+        }
+      });
     } else{
 
     }
 
 });
 
-module.exports = app;
+module.exports = router;

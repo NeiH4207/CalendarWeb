@@ -10,6 +10,8 @@ sign_in_btn.addEventListener("click", () => {
     container.classList.remove("sign-up-mode");
 });
 
+
+
 function Validator(options) {
     var formElement = document.querySelector(options.form)
 
@@ -27,7 +29,6 @@ function Validator(options) {
 function validate(inputElement, rule, options) {
     var check = 0
         // chỉ đến phần in ra lỗi 
-    var errorElement = inputElement.parentElement.querySelector(options.errorSelector)
         // nếu inputElement có tồn tại
     if (inputElement) {
         // xử lý blur ra khỏi input
@@ -38,10 +39,8 @@ function validate(inputElement, rule, options) {
             // nếu có lỗi thì in ra thông báo lỗi
             if (errorMessage) {
                 check = 1
-                errorElement.innerText = errorMessage
                 inputElement.parentElement.classList.add('invalid')
             } else {
-                errorElement.innerText = ''
                 inputElement.parentElement.classList.remove('invalid')
             }
 
@@ -49,7 +48,6 @@ function validate(inputElement, rule, options) {
 
         // xử lý mỗi khi người dùng nhập
         inputElement.oninput = function() {
-            errorElement.innerText = ''
             inputElement.parentElement.classList.remove('invalid')
         }
 
@@ -90,3 +88,4 @@ Validator.isMinLen = function(selector, message) {
         }
     }
 }
+

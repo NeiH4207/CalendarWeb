@@ -1,27 +1,17 @@
 var express = require('express')
 var passport = require('passport')
-var session = require('express-session')
 var cookieParser = require('cookie-parser')
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy
-var bodyParser = require('body-parser')
 var config = require('../configuration/config')
-var mysql = require('mysql');
-var app = express()
 
-app.set('views', __dirname + '/../views');
-app.set('view engine', 'ejs');
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'keyboard cat', key: 'sid' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(__dirname + '/../public'));
+var router = express.Router()
+router.use(cookieParser());
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://hienvq:123321@cluster0.hklcy.mongodb.net/test?retryWrites=true&w=majority";
 
-app.post('/', function(req, res) {
+router.post('/', function(req, res) {
     var username = req.body.username;
     var password = req.body.password;
     if (username && password) {
@@ -33,7 +23,7 @@ app.post('/', function(req, res) {
             if (err) throw err;
             db.close();
             if (result.length > 0){
-                res.render('home');
+                res.render('home', {username: username});
             } else {
                 res.render('login', { thongBao: 'Error login, please try again', color: 'red' })
             }
@@ -42,8 +32,8 @@ app.post('/', function(req, res) {
     } 
 });
 
-app.get('/google', passport.authenticate('google', { scope: 'email' }));
-app.get('/google/callback',
+router.get('/google', passport.authenticate('google', { scope: 'email' }));
+router.get('/google/callback',
     passport.authenticate('google', { successRedirect: '/gmail', failureRedirect: '/login' }),
     function(req, res) {
         res.redirect('/');
@@ -61,8 +51,8 @@ passport.use(new GoogleStrategy({
 ));
 
 // thiet lap su dung dang nhap bang fb
-app.get('/facebook', passport.authenticate('facebook', { scope: ['profile', 'email'] }));
-app.get('/facebook/callback',
+router.get('/facebook', passport.authenticate('facebook', { scope: ['profile', 'email'] }));
+router.get('/facebook/callback',
     passport.authenticate('facebook', { successRedirect: '/facebook', failureRedirect: '/login' }),
     function(req, res) {
         res.redirect('/');
@@ -83,4 +73,4 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-module.exports = app;
+module.exports = router;

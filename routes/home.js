@@ -1,56 +1,71 @@
-var express = require('express')
-var passport = require('passport')
-var session = require('express-session')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var app = express()
-
-app.set('views', __dirname + '/../views');
-app.set('view engine', 'ejs');
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'keyboard cat', key: 'sid' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(__dirname + '/../public'));
+var router = require("express").Router();
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://hienvq:123321@cluster0.hklcy.mongodb.net/test?retryWrites=true&w=majority";
+// const uri = "mongodb://localhost:27017";
+var _db;
 
-app.post('/addEvent', function(req, res) {
-    var data = {
-        start: req.body.start,
-        title: req.body.title,
-        location: req.body.location,
-        details: req.body.detail
-    };
-    console.log(data);
-    console.log('ok1');
-    MongoClient.connect(uri, function(err, db) {
+MongoClient.connect(uri, function(err, db) {
+  if (err) throw err;
+  _db = db.db("CalendarDB");
+}); 
+
+
+router.post('/addEvent', function(req, res) {
+    var data = req.body;
+    _db.collection("event").insertOne(data,function(err, collection) {
       if (err) throw err;
-      var dbo = db.db("CalendarDB");
-      dbo.collection("event").insertOne(data,function(err, collection) {
-        if (err) throw err;
-      });
-      db.close();
-    }); 
+    });
     res.send(true);
 });
 
-app.post('/checkEvent', function(req, res) {
-    var id = req.body.id;
-    console.log(id);
-    console.log(req.body);
-    MongoClient.connect(uri, function(err, db) {
+router.post('/addSubUser', function(req, res) {
+    var data = req.body;
+    _db.collection("subcribe").insertOne(data,function(err, collection) {
       if (err) throw err;
-      var dbo = db.db("CalendarDB");
-      var query = { 'id' : id};
-      dbo.collection("event").find(query).toArray(function(err, result) {
-        if (err) throw err;
-        res.send(result);
-      });
-      db.close();
+    });
+    console.log("insert successful!");
+    res.send(true);
+});
+router.post('/delSubUser', function(req, res) {
+    var query = req.body;
+    _db.collection("subcribe").deleteMany(query);
+    console.log("delete successful!");
+    res.send(true);
+});
+
+router.post('/checkEvent', function(req, res) {
+    var query = req.body;
+    _db.collection("event").find(query).toArray(function(err, result) {
+      if (err) throw err;
+      res.send(result);
     });
 });
 
-module.exports = app;
+router.post('/getEvent', function(req, res) {
+  var query = req.body;
+  _db.collection("event").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+router.post('/getEvents', function(req, res) {
+  var query = req.body.ids;
+  // console.log(_db);
+  _db.collection("event").find({
+    $or: query
+  }).toArray(function(err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+router.post('/deleteEvent', function(req, res) {
+    var id = req.body.id;
+    var query = { "id" : id};
+    console.log(req.body);
+    _db.collection("event").remove(query);
+});
+
+module.exports = router;

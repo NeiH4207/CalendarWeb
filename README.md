@@ -1,4 +1,4 @@
-# Nhom_10 
+sudo apt update# Nhom_09 
 
 Cách chạy bài tập lớn:
 - Cài đặt nodejs phiên bản v10.19.0.
