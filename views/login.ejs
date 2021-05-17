@@ -15,8 +15,8 @@
     <link rel="icon" href="images/icon.svg">
 </head>
 
-<body style="background-color: #8FBC8F;">
-    <div class="container" style="background-color: #8FBC8F;">
+<body>
+    <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
                 <form action="auth" class="sign-in-form" method="POST">
@@ -27,10 +27,11 @@
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" required />
+                        <input type="password" style="margin-top: 15px;" name="password" placeholder="Password" required />
                     </div>
-                    <input type="submit" value="Login" class="btn solid" style="background-color: #167e56;" />
-                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="width: 100px;"></div>
+                    <input type="submit" value="Login"  class="btn transparent" style="width: 20%; " />
+                     <p id="aaa">Or sign in with</p>
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="margin-top: 10px; "  ></div>
                     <!-- <a href="#" onclick="signOut();">Sign out</a> -->
                     
                     <script>
@@ -81,12 +82,12 @@
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input id="password" type="password" placeholder="Password" name="password" required />
+                        <input id="password" type="password" style="margin-top: 20px;"  placeholder="Password" name="password" required />
                         <span class="form-message"></span>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input id="confirm" type="password" placeholder="confirm" name='confirm' />
+                        <input id="confirm" type="password"  style="margin-top: 20px;" placeholder="confirm" name='confirm' />
                         <span class="form-message"></span>
                     </div>
                     <input type="submit" class="btn transparent" value="Sign up" />

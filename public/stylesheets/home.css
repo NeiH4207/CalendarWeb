@@ -1,9 +1,21 @@
 html {
-  background-color: #8FBC8F;
+    background-image: url(/images/background.jpg);
+/* Background colour if image is unavailable */
+ /* Set a specified height */
+ /* Center the image */
+    background-position: center;
+ /* Do not repeat the image */
+    background-repeat: repeat;
+ /* Resize the background image to cover the entire container */
+    background-size: cover;
+    position: relative;
+    /*background-color: #8FBC8F;*/
+    background-position: fixed;
+    background-attachment: fixed;
 }
 
 .container {
-  background-color: #8FBC8F;
+  /*background-color: #8FBC8F;*/
   color: #eee;
   height: 100%;
   /*justify-content: left;*/
@@ -13,8 +25,18 @@ html {
     box-sizing: border-box;
 }
 body{
-    background: #fff;
-    background-color: #8FBC8F;
+    /*background: #fff;*/
+    /*background-color: #8FBC8F;*/
+ /* The image */
+/* Background colour if image is unavailable */
+ /* Set a specified height */
+ /* Center the image */
+    background-position: center;
+ /* Do not repeat the image */
+    background-repeat: repeat;
+ /* Resize the background image to cover the entire container */
+    background-size: cover;
+    position: relative;
 }
 .calendar-popup, .calendar-popup{
   display: flex;
@@ -115,7 +137,7 @@ button{
   max-width: 100%;
   width: 100%;
   height: 100%;
-  background-color: #2F4F4F;
+  /*background-color: #2F4F4F;*/
   box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
   font-family: 'Open Sans', Helvetica;
   border-collapse: collapse;
@@ -125,13 +147,17 @@ button{
 .mycalendar{
     width: 100%;
     height: 6%;
-    background-color: #167e56;
+    /*background-color: #167e56;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 3rem;
     text-align: center;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-color: white;
+    border-bottom: solid;
+    border-top: solid;
+    border-width: 1px;
 }
 .mycalendar h1 {
   font-size: 130%;
@@ -144,15 +170,19 @@ button{
 }
 
 .month {
-  border: 0.1rem solid #fff;
+  /*border: 0.1rem solid #fff;*/
   width: 100%;
   height: 7%;
-  background-color: #167e56;
+  /*background-color: #167e56;*/
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  border-color: white;
+  border-bottom: solid;
+  /*border-top: solid;*/
+  border-width: 1px;
 }
 
 .month i {
@@ -206,7 +236,7 @@ h1 {
   font-size: 100%;
   margin: 1.5%;
   width: calc(77% / 7);
-  height: 2.5rem;
+  height: 2.8rem;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -218,6 +248,7 @@ h1 {
   background-color: #262626;
   border: 0.2rem solid #777;
   cursor: pointer;
+  opacity: 1.0;
 }
 
 .prev-date,
@@ -226,7 +257,7 @@ h1 {
 }
 
 .today {
-  background-color: #167e56;
+  background-color: #797d7c;
 }
 
 .control-group {
@@ -350,7 +381,7 @@ h1 {
 .icon_menu_1 {
   width: 35px;
   height: 5px;
-  background-color: #167e56;
+  /*background-color: #167e56;*/
   margin: 6px 0;
 }
 
@@ -380,24 +411,32 @@ th, td {
   text-align: center;
   padding: 8px;
   width: 100px;
+  border-color: white;
 }
   
-tr:nth-child(2n) {
-  color: black;
-  background: #eff0f1;
-}
-
-tr:nth-child(2n+3) {
-  color: black;
-  background: #fff;
-}
-
-table td:hover{
+table td:hover:not(.dayx, .time, .event_time){
   cursor: pointer;
-  background: #8FBC8F;
+  background: rgba(241,243,244,0.24);
+  /*background: #8FBC8F;*/
+  /*background-color: black;*/
+  /*opacity: 0.9;*/
+  /*border-style: solid;*/
+  /*font-size: 17px;*/
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(even){
+  color: black;
+  background-color: #fff;
+  border-radius: 0.1px;
+  background: rgba(255,255,255,0.7);
+  /*border-color: #8FBC8F;*/
+}
+tr:nth-child(odd){
+  background-color: #fff;
+  border-radius: 0.1px;
+  background: rgba(255,255,255,0.5);
+  /*border-color: #8FBC8F;*/
+}
 
 .day, .time {
   background: #2F4F4F;
@@ -409,7 +448,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 }
 
 .headtb{
-  background: #2F4F4F;
+  /*background: #2F4F4F;*/
   color:#fff;
   text-transform: uppercase;
   font-size: 1.3em;
@@ -427,7 +466,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 }
 
 .dayx {
-  background: #2F4F4F;
+  background: rgba(47, 79, 79, 0.8);
   color:#fff;
   text-transform: uppercase;
   font-size: 1.3em;
@@ -437,14 +476,20 @@ tr:nth-child(even){background-color: #f2f2f2}
 }
 
 .time{
+  background: rgba(47, 79, 79, 0.8);
+  background-o
   width: 10%;
+  border-color: white;
+  border-style: dotted;
+  border-width: 1px;
 }
 
 .event_time{
-  background: #2F4F4F;
+  background: rgba(47, 79, 79, 0.8);
+  background-o
   text-align: center;
   color: #fff;
-
+  border-color: white;
 }
 /* Add this attribute to the element that needs a tooltip */
 
@@ -620,7 +665,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 #calendar-popup {
   margin: 7% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  width: 25%;
+  width: 22%;
   min-width: 300px;
   margin-top: 5%;
   padding: 0 0;
@@ -629,6 +674,8 @@ tr:nth-child(even){background-color: #f2f2f2}
   border-radius: 10px;
   color: black;
   background: #FFF;
+  /*opacity: 0.95;*/
+  /*background-image: url(/images/bg_form.jpg);*/
 }
 .calander_popip_title{
   border-radius: 10px;
@@ -665,20 +712,27 @@ tr:nth-child(even){background-color: #f2f2f2}
   font-size: 1em;
   font-weight: normal;
   margin-bottom: 0;
-  padding:0.5em;
-  width: 100%;
+  padding:0.2em;
+  /*width: 100%;*/
   font-family: 'Open Sans', Helvetica;
   resize: none;
+}
+
+label{
+
+}
+.event-mode{
+  height: 15px;
 }
 
 #calendar-popup input {
   margin-bottom: 0em;
   padding-left: 0.5em;
-  background-color: #FFFFFF;
+  /*background-color: #FFFFFF;*/
   
 }
 #calendar-popup .submit_btn {
-      width:86%;
+      width:50%;
       background-color:#eee;
 }
 
@@ -709,7 +763,7 @@ tr:nth-child(even){background-color: #f2f2f2}
     margin-left: 10px;
 }
 #calendar-popup li {
-  background:#ace1af;
+  /*background:#ace1af;*/
 }
 #form-inf button{
   width: 40%;
@@ -908,7 +962,7 @@ font-size: 16px;
   width: 100%;
   height: 8%;
   overflow: hidden;
-  background-color: #2F4F4F;
+  /*background-color: #2F4F4F;*/
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1029,3 +1083,4 @@ li[class^="menu-item-"] a{
 li[class^="menu-item-"] a:hover{
     color: #dc18ff!important;
 }
+

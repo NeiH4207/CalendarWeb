@@ -13,6 +13,9 @@ MongoClient.connect(uri, function(err, db) {
 
 router.post('/addEvent', function(req, res) {
     var data = req.body;
+    if (data.hasOwnProperty("_id")){
+      delete data._id;
+    }
     _db.collection("event").insertOne(data,function(err, collection) {
       if (err) throw err;
     });

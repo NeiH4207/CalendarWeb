@@ -40,8 +40,7 @@
             <div class="mycalendar">
               <div class="row" style="align-items: center;">
                 <h1>
-                  Create Event
-                  <button id="create_event" class="create_event"> + </button>
+                  My Calendar
                 </h1>
               </div>
             </div>
@@ -61,7 +60,7 @@
             </div>
             <div class="mycalendar">
               <h1>
-                Subcriber
+                Subcriber List
               </h1>
             </div>
             <div class="control-group" id="subcriber"><!-- 
@@ -106,13 +105,23 @@
               Location</label>
             <input id="event-location" class='form-control' type="text" value = "" name="location" />
           </li>
-
           <li>
             <label for="event-details"><i class="fa" aria-hidden="true"></i>
               Description</label>
             <textarea id="event-details" class='form-control' type="text" value = "" name="details"></textarea>
           </li>
-            <button id="submit_1" style="width: 82%;"> Submit </button>
+          <li style="background-color: white">
+            <label class="event-mode">
+              <!-- <row> -->
+                <div style="display: flex; flex-direction: row; align-items: center;">
+                <input type="checkbox" id="mode" name="mode">
+                <label style="margin-left: 5px;">Private</label>
+              </div>
+              <!-- </row> -->
+            </label> 
+          </li>
+
+            <button id="submit_1" style="width: 60%; margin-top: 50px;"> Submit </button>
         </ul>
       </form>
     </div>

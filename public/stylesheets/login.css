@@ -9,17 +9,51 @@ body {
     font-family: "Montserrat", sans-serif;
     height: 100vh;
     margin: -20px 0 50px;
+    letter-spacing: .01428571em;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    /*background-color: #8FBC8F;*/
+ /* The image */
+    /*background-image: url(/images/bg1.jpg);*/
+    background-image: url(/images/background.jpg);
+/* Background colour if image is unavailable */
+ /* Set a specified height */
+ /* Center the image */
+    background-position: fixed;
+ /* Do not repeat the image */
+    background-repeat: no-repeat;
+ /* Resize the background image to cover the entire container */
+    background-size: cover;
+    position: relative;
 }
 
 .container {
     position: relative;
-    background-color: #fff;
+    /*background-color: #fff;*/
     border-radius: 10px;
     /* box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); */
     overflow: hidden;
     width: 100%;
     max-width: 100%;
     min-height: 100%;
+    height: 100%;
+
+    letter-spacing: .01428571em;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+/* Background colour if image is unavailable */
+ /* Set a specified height */
+ /* Center the image */
+    background-position: fixed;
+ /* Do not repeat the image */
+    background-repeat: no-repeat;
+ /* Resize the background image to cover the entire container */
+    background-size: cover;
+    position: relative;
 }
 
 .forms-container {
@@ -33,10 +67,14 @@ body {
     transform: translate(-50%, -50%);
     left: 75%;
     width: 50%;
-    transition: 1s 0.5s ease-in-out;
+    transition: 1s 0.2s ease-in-out;
+    transition-delay: 0s;
     display: grid;
     grid-template-columns: 1fr;
     z-index: 5;
+    height: 100%;
+    
+
 }
 
 form {
@@ -45,19 +83,23 @@ form {
     justify-content: center;
     flex-direction: column;
     padding: 0rem 5rem;
-    transition: all 0.2s 0.7s;
+    transition: all 1s 0.5s;
     overflow: hidden;
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    
 }
 
 form.sign-up-form {
     opacity: 0;
     z-index: 1;
+    
+    
 }
 
 form.sign-in-form {
     z-index: 2;
+    
 }
 
 .title {
@@ -89,7 +131,7 @@ form.sign-in-form {
     text-align: center;
     line-height: 55px;
     color: #acacac;
-    transition: 0.5s;
+    transition: 0.1s;
     font-size: 14px;
 }
 
@@ -176,17 +218,17 @@ form.sign-in-form {
     right: 48%;
     transform: translateY(-50%);
     /* background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%); */
-    background-image: linear-gradient(-45deg, #167e56 0%, #167e56 100%);
-    background-color: #167e56;
-    transition: 1s ease-in-out;
+   /* background-image: url(https://i.pinimg.com/originals/22/23/43/222343b5ea0dd18694b527d160267c17.jpg);
+    background-color: #167e56;*/
+    transition: 0s ease-in-out;
     border-radius: 50%;
     z-index: 6;
 }
 
 .image {
     width: 100%;
-    transition: transform 1s ease-in-out;
-    transition-delay: 0.4s;
+    transition: transform 0s ease-in-out;
+    transition-delay: 0s;
 }
 
 .panel {
@@ -213,7 +255,7 @@ form.sign-in-form {
 .panel .content {
     color: #fff;
     transition: transform 0.9s ease-in-out;
-    transition-delay: 0.6s;
+    transition-delay: 0s;
 }
 
 .panel h3 {
@@ -252,7 +294,7 @@ form.sign-in-form {
 
 .container.sign-up-mode .left-panel .image,
 .container.sign-up-mode .left-panel .content {
-    transform: translateX(-800px);
+    transform: translateX(-1000px);
 }
 
 .container.sign-up-mode .signin-signup {
@@ -262,7 +304,7 @@ form.sign-in-form {
 .container.sign-up-mode form.sign-up-form {
     opacity: 1;
     z-index: 2;
-    padding-top: 150px;
+    /*padding-top: 150px;*/
 }
 
 .container.sign-up-mode form.sign-in-form {
@@ -294,7 +336,7 @@ form.sign-in-form {
         width: 100%;
         top: 95%;
         transform: translate(-50%, -100%);
-        transition: 1s 0.6s ease-in-out;
+        transition: 0s 0s ease-in-out;
     }
     .signin-signup,
     .container.sign-up-mode .signin-signup {
@@ -320,12 +362,12 @@ form.sign-in-form {
     .image {
         width: 200px;
         transition: transform 0.9s ease-in-out;
-        transition-delay: 0.4s;
+        transition-delay: 0s;
     }
     .panel .content {
         padding-right: 15%;
         transition: transform 0.9s ease-in-out;
-        transition-delay: 0.4s;
+        transition-delay: 0s;
     }
     .panel h3 {
         font-size: 1.2rem;
@@ -400,3 +442,9 @@ form.sign-in-form {
         left: 50%;
     }
 }
+#aaa{
+    color: #c1d8e8;
+    display: inline;
+    margin-top: 15px;
+    margin-bottom: 7px;
+  }

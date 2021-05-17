@@ -3,15 +3,29 @@
     box-sizing: border-box;
 }
 body{
-    background: #fff;
-    background-color: #8FBC8F;
-    width: 100%;
+    letter-spacing: .01428571em;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    /*background-color: #8FBC8F;*/
+ /* The image */
+    background-image: url(/images/background.jpg);
+/* Background colour if image is unavailable */
+ /* Set a specified height */
+ /* Center the image */
+    background-position: fixed;
+ /* Do not repeat the image */
+    background-repeat: no-repeat;
+ /* Resize the background image to cover the entire container */
+    background-size: cover;
+    position: relative;
 }
 
 button{
   position: relative;
  /*this will calculate what 50% of the element width is and will move it across the X-axis. The negative value ensures it moves to the left*/
-  background-color: #4CAF50; /* Green */
+  /*background-color: #4CAF50; /* Green */*/
   border: 0.125rem solid #fff;
   border-radius: 2rem;
   color: white;
@@ -22,16 +36,17 @@ button{
   margin: 4px 2px;
   cursor: pointer;
   margin-top: 25px;
+  border-color: white;
 }
 
 button:hover {
-    background-color: transparent;
-    color: white;
-    border-color: white;
-    border: 1.5rem  #fff;
-    font-size: 1rem;
+  /*background-color: transparent;*/
+  color: white;
+  /*border: 1.5rem  #fff;*/
+  font-size: 1.2rem;
 
-    text-decoration: none;
+  /*text-decoration: none;*/
+  border-color: white;
 }
 .row {
   display: -ms-flexbox;

@@ -1,3 +1,4 @@
+
 const date = new Date();
 function jdFromDate(dd, mm, yy) {
   var a, y, m, jd;
@@ -235,9 +236,11 @@ function get_username(){
   return document.getElementById("dataset").dataset.username;
 }
 
+
 const USERNAME = get_username();
 
 function show_calendar(){
+  
   document.querySelector(".prev").addEventListener("click", () => {
     date.setMonth(date.getMonth() - 1);
     renderCalendar(date);
@@ -310,6 +313,7 @@ function generateTableHead(table) {
   for (var i = 0; i < 8; i++){
     var square = row.insertCell();
     var content = document.createElement("header_timetable");
+        // square.style.backgroundColor = "#167e56";
     if (i == 0){
       content.append("Time");
     square.className = 'time';
@@ -326,6 +330,7 @@ var list_event_id = [];
 var active_id = {};
 var cur_day;
 var cur_ev_id;
+var id_to_date = {};
 
 function generateTable(table) {
   var params;
@@ -335,18 +340,21 @@ function generateTable(table) {
     var row = table.insertRow();
     for (var j = 0; j < 8; j++) {
       var cell = row.insertCell();
-      var text = document.createElement("event");
+      var text = document.createElement("event")
+      if (j > 0){
+        cell.style.border = "1px dotted white";
+      }
       text.id = cyrb53(String(i) + String(day.getDate()));
+      day.setHours(i, 0, 0, 0);
+      id_to_date[text.id] = new Date(day);
 
       if (j == 0){
         text.append(i.toString() + ".00 - " + (i + 1).toString() + ".00");  
         cell.className = 'event_time';
+        // cell.style.backgroundColor = "#167e56";
       } else{
           list_event_id.push({"id": text.id, "username": USERNAME});
           // Send a POST request
-          // params = {
-          //   id: text.id
-          // };
           cell.addEventListener("click", function(){
             let id = this.getElementsByTagName("event")[0].id;
             if (active_id.hasOwnProperty(id)){
@@ -355,20 +363,21 @@ function generateTable(table) {
               let form = document.getElementById("calendar-show-form");
               var day = data.start
               var date = new Date(String(day));
-              console.log(id);
-              console.log(data.start);
               document.getElementById("event-name-info").innerHTML = data.title;
-              document.getElementById("event-time-info").innerHTML = date.toDateString();
+              document.getElementById("event-time-info").innerHTML = date.toTimeString().substring(0, 5) + " " + date.toDateString();
               document.getElementById("event-location-info").innerHTML = data.location;
               document.getElementById("event-detail-info").innerHTML = data.details;
               cur_day = day;
               //a= document.getElementById("event-name-info");
               form.style.display = "block";
             } else{
+                var date = id_to_date[id];
 
+                date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+                // console.log(date.getTimezoneOffset());
                 modal.style.display = "block";
                 // document.getElementById("calendar-form").style.display = "none";
-                document.getElementById("event-start").value="";
+                document.getElementById("event-start").value = date.toISOString().slice(0,16);
                 document.getElementById("event-title").value = "";
                 document.getElementById("event-details").value = "";
                 document.getElementById("event-location").value = "";
@@ -393,6 +402,11 @@ function generateTable(table) {
         if(event.id){
           active_id[event.id] = event;
           document.getElementById(event.id).innerHTML = event.title;
+          // document.getElementById(event.id).parentElement.style.backgroundColor = "#167e56";
+          document.getElementById(event.id).parentElement.style.backgroundColor = "#fff";
+          document.getElementById(event.id).parentElement.style.color = "black";
+          document.getElementById(event.id).parentElement.style.opacity = 0.85;
+          // console.log(document.getElementById(event.id).parentElement);
           // document.getElementById(res.id).style.fontSize = 0;
         }
       }
@@ -419,16 +433,17 @@ window.onclick = function(event) {
     modal2.style.display = "none";
   }
 }
-var createButton = document.getElementById("create_event");
+// var createButton = document.getElementById("create_event");
 
-createButton.addEventListener("click", function(){
-  modal.style.display = "block";
-  // document.getElementById("calendar-form").style.display = "none";
-  document.getElementById("event-start").value="";
-  document.getElementById("event-title").value = "";
-  document.getElementById("event-details").value = "";
-  document.getElementById("event-location").value = "";
-});
+// createButton.addEventListener("click", function(){
+//   modal.style.display = "block";
+//   // document.getElementById("calendar-form").style.display = "none";
+//   document.getElementById("title_event_form").innerHTML = "Create Event";
+//   document.getElementById("event-start").value="";
+//   document.getElementById("event-title").value = "";
+//   document.getElementById("event-details").value = "";
+//   document.getElementById("event-location").value = "";
+// });
 
 var formElem = document.getElementById("event-form");
 
@@ -444,9 +459,13 @@ formElem.onsubmit = async (e) => {
   data.append("id", event_id);
   data.append("username", USERNAME);
   var value = Object.fromEntries(data.entries());
+  // console.log(value);
   active_id[event_id] = value;
   if (document.getElementById(event_id)){
     document.getElementById(event_id).innerHTML = value.title;
+    document.getElementById(event_id).parentElement.style.backgroundColor = "#fff";
+    document.getElementById(event_id).parentElement.style.color = "black";
+    document.getElementById(event_id).parentElement.style.opacity = 0.85;
   } else{
     alert("Create new event in this week, please try again!");
   }

@@ -4,8 +4,26 @@
     font-size: .875rem;
     font-weight: 400;
     line-height: 1.25rem;
-    background-color: #8FBC8F;
+    /*background-color: #8FBC8F;*/
+ /* The image */
+    background-image: url(/images/background.jpg);
+/* Background colour if image is unavailable */
+ /* Set a specified height */
+ /* Center the image */
+    background-position: fixed;
+ /* Do not repeat the image */
+    background-repeat: repeat;
+ /* Resize the background image to cover the entire container */
+    background-size: cover;
+    position: relative;
 }
+
+input{
+    background: rgba(241,243,244,0.24);
+    border-color: white;
+    height: 30px;
+}
+
 .profile {
     width: 600px;
     height: 100%;
@@ -14,7 +32,9 @@
     margin-top: 5%;
     box-shadow: 1px;
     background-color:#ffffff;
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px 10px 10px 10px;
+    /*padding: 30px;*/
 }
 .t2 {
     display: flex;
@@ -183,6 +203,7 @@
     background-color: #8fbc8f9e;
     border-radius: 4px;
     outline: none;
+    font-size: 15px;
 }
 .btn1:hover {
     color:#fff;

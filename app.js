@@ -66,15 +66,13 @@ app.get('/', function(req, res) {
 app.get('/forgot', function(req, res) {
     res.render('forgot')
 });
-app.get('/home',checkAuthenticated, function (req, res) {
 
-    _db.collection('account').insertOne(req.user,function(err, collection){
-        if (err) throw err;
-        console.log("Record inserted Successfully");
-              
-    });
-    res.render('home', req.user);
+app.get('/home', function(req, res) {
+    username = {"username": req._parsedOriginalUrl.query.split('=')[1]};
+    res.render('home', username)
 });
+
+
 app.get('/profile', function (req, res) {
     res.render('profile')
 });
@@ -95,6 +93,7 @@ app.get('/auth/facebook/callback',
         res.redirect('/');
     }
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -114,63 +113,10 @@ app.get('/login', function(req, res) {
     res.render('login');
 })
 
-app.post('/login',(req, res)=>{
-    let token= req.body.token;
-    async function verify() {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: '43339122431-re8ubcvgrj5mim4ufqinsf5rlo82kbok.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
-        // Or, if multiple clients access the backend:
-        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-    });
-    const payload = ticket.getPayload();
-    const userid = payload['sub'];
-    // console.log('payload ', payload )
-    // If request specified a G Suite domain:
-    // const domain = payload['hd'];
-  }
-  verify()
-  .then(()=>{
-      res.cookie('session-token', token);
-      res.send('success');
-  }).catch(console.error);
-})
-    
-app.get('/protectedroute',(res,req)=>{
-    res.render('protectedroute.ejs')
-})
 
 app.get('/friend',(res,req)=>{
     res.redirect('friend.ejs')
 })
-
-function checkAuthenticated(req, res, next){
-    let token = req.cookies['session-token'];
-
-    let user= {};
-    async function verify(){
-        const ticket= await client.verifyIdToken({
-            idToken: token,
-            audience: '43339122431-re8ubcvgrj5mim4ufqinsf5rlo82kbok.apps.googleusercontent.com'
-
-        });
-        const payload= ticket.getPayload();
-        user.username=payload.email.split('@')[0];
-        user.fullname= payload.name;
-        user.email=payload.email;
-        user.picture=payload.picture;
-        // console.log(user);
-    }
-
-    verify()
-    .then(()=>{
-        req.user = user;
-        next();
-    })
-    .catch(err=>{
-        res.redirect('/login');
-    })
-}
 
 
 // get

@@ -10,38 +10,38 @@ pwd = document.getElementById("inp_pwd_info");
 email = document.getElementById("inp_email_info");
 phone = document.getElementById("inp_phone_info");
 
-function get_username(){
+function get_username() {
 	return url.searchParams.get("username");
 }
 
 const USERNAME = get_username();
 
-function load_data(){
-	data = {"username": USERNAME};
+function load_data() {
+	data = { "username": USERNAME };
 	axios.post(
 		"/get/profile",
-	 	data
+		data
 	)
-	.then(function(res){ 
-		if(res.data.length > 0){
-			console.log(res);
-			if(res.data[0].hasOwnProperty("fullname")){
-				fullname.value = res.data[0]["fullname"];
+		.then(function (res) {
+			if (res.data.length > 0) {
+				console.log(res);
+				if (res.data[0].hasOwnProperty("fullname")) {
+					fullname.value = res.data[0]["fullname"];
+				}
+				if (res.data[0].hasOwnProperty("dob")) {
+					dob.value = res.data[0]["dob"];
+				}
+				pwd.value = res.data[0]["password"];
+				email.value = res.data[0]["email"];
+				phone.value = res.data[0]["phone"];
 			}
-			if(res.data[0].hasOwnProperty("dob")){
-				dob.value = res.data[0]["dob"];
-			}
-			pwd.value = res.data[0]["password"];
-			email.value = res.data[0]["email"];
-			phone.value = res.data[0]["phone"];
-		}
-	})
-	.catch(function(res){ console.log(res) });
+		})
+		.catch(function (res) { console.log(res) });
 };
- 
+
 load_data();
 
-document.getElementById("update_info").onclick = function(){
+document.getElementById("update_info").onclick = function () {
 	console.log(fullname);
 	data = {
 		"fullname": fullname.value,
@@ -53,14 +53,14 @@ document.getElementById("update_info").onclick = function(){
 	}
 	axios.post(
 		"/update/profile",
-	 	data
+		data
 	)
 	alert("Update information successful!");
 }
 
 
-document.getElementById("cancel").onclick = function() {
-  stringURL = "/home";
-  this.href = stringURL;
-  console.log(stringURL);
+document.getElementById("cancel").onclick = function () {
+	stringURL = "/home";
+	this.href = stringURL;
+	console.log(stringURL);
 }

@@ -10,9 +10,9 @@
     <script src="/javascripts/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="url("https://i.pinimg.com/originals/3b/8a/d2/3b8ad2c7b1be2caf24321c852103598a.jpg");">
     <% include ./includes/menu_home.ejs %>
-    <div class="profile">
+    <div class="profile" style="border-radius: 10px; padding: 30px; margin-top: 7%;">
         <header>
             <h1 class="p_tittle">Personal information</h1>
             <div class="p_content">Basic information, like your name and photo, that you use across CalanderWeb services</div>
@@ -38,31 +38,17 @@
                     <h3 class="t31">
                         Date of Birth
                     </h3>
-                    <div class="t32">
+                    <div class="t32" style="width: 200px;">
                         <input id="inp_dob_info" type="date" class="input" placeholder="" />
                     </div>
                     <i class="fas fa-calendar-day t33"></i>
-                </div><!-- 
-                <div class="t4">
-                    <h3 class="t41">
-                        Gender
-                    </h3>
-                    <div class="t42">
-                        <input id="" type="radio" id="male" name="gender" value="male">
-                        <label for="male">Male</label><br>
-                        <input id="" type="radio" id="female" name="gender" value="female">
-                        <label for="female">Female</label><br>
-                        <input id="" type="radio" id="other" name="gender" value="other">
-                        <label for="other">Other</label>
-                    </div>
-                    <i class="fas fa-venus-mars t43"></i>
-                </div> -->
+                </div>
                 <div class="t5">
                     <h3 class="t51">
                         Password
                     </h3>
                     <div class="t52">
-                        <input id="inp_pwd_info" type="password" class="input" placeholder="" />
+                        <input id="inp_pwd_info" style="padding-top: 10px;" type="password" class="input" placeholder="" />
                     </div>
                     <i class="fas fa-key t53"></i>
                 </div>
@@ -90,9 +76,9 @@
                     <i class="fas fa-phone-square-alt b33"></i>
                 </div>
             </div>
-            <div class="save">
-                <button class="btn1"><a id='cancel' href="">Cancel</a></button>
-                <button class="btn2"><a id='update_info' href=""> Update Info</a></button>
+            <div class="save" style="margin-top: 7%;">
+                <button style="margin-right: 30px; margin-left: 30px;" class="btn1"><a id='cancel' href="">Cancel</a></button>
+                <button style="margin-left: 30px; margin-right: 30px;" class="btn2"><a id='update_info' href=""> Update Info</a></button>
             </div>
         </section>
     </div>

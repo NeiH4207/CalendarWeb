@@ -132,7 +132,7 @@ function generateTable(table) {
   ).then(function (response) {
       for (var i = 0; i < response.data.length; i++){
         event = response.data[i];
-        if(event.id){
+        if(event.id && event.mode != 'on'){
           active_id[event.id] = event;
           document.getElementById(event.id).innerHTML = event.title;
           // document.getElementById(res.id).style.fontSize = 0;

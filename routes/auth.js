@@ -25,52 +25,77 @@ router.post('/', function(req, res) {
             if (result.length > 0){
                 res.render('home', {username: username});
             } else {
-                res.render('login', { thongBao: 'Error login, please try again', color: 'red' })
+                // res.render('login', { thongBao: 'Error login, please try again', color: 'red' })
             }
           });
         });
     } 
 });
 
-router.get('/google', passport.authenticate('google', { scope: 'email' }));
-router.get('/google/callback',
-    passport.authenticate('google', { successRedirect: '/gmail', failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect('/');
-    }
-);
 
-passport.use(new GoogleStrategy({
-        clientID: config.googleClientID,
-        clientSecret: config.googleClientSecret,
-        callbackURL: config.callback_url_gmail
-    },
-    function(accessToken, refreshToken, profile, done) {
-        return done(null, profile);
-    }
-));
+router.get('/home',checkAuthenticated, function (req, res) {
 
-// thiet lap su dung dang nhap bang fb
-router.get('/facebook', passport.authenticate('facebook', { scope: ['profile', 'email'] }));
-router.get('/facebook/callback',
-    passport.authenticate('facebook', { successRedirect: '/facebook', failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect('/');
-    }
-);
+    res.render('home', req.user);
+});
 
-// sử dụng  FacebookStrategy trong Passport.
-passport.use(new FacebookStrategy({
-        // thiết lập các cấu hình cần thiết
-        clientID: config.facebook_api_key,
-        clientSecret: config.facebook_api_secret,
-        callbackURL: config.callback_url_facebook
-    },
-    function(req, res, profile, done) {
-        process.nextTick(function() {
-            console.log(profile.displayName)
+router.post('/login',(req, res)=>{
+    let token= req.body.token;
+    async function verify() {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: '43339122431-re8ubcvgrj5mim4ufqinsf5rlo82kbok.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+    const payload = ticket.getPayload();
+    const userid = payload['sub'];
+    // console.log('payload ', payload )
+    // If request specified a G Suite domain:
+    // const domain = payload['hd'];
+  }
+  verify()
+  .then(()=>{
+      res.cookie('session-token', token);
+      res.send('success');
+  }).catch(console.error);
+})
+
+router.get('/friend',(res,req)=>{
+    res.redirect('friend.ejs')
+})
+
+function checkAuthenticated(req, res, next){
+
+    let token = req.cookies['session-token'];
+
+    let user= {};
+    async function verify(){
+        const ticket= await client.verifyIdToken({
+            idToken: token,
+            audience: '43339122431-re8ubcvgrj5mim4ufqinsf5rlo82kbok.apps.googleusercontent.com'
+
         });
+        const payload= ticket.getPayload();
+        user.username=payload.email.split('@')[0];
+        user.fullname= payload.name;
+        user.email=payload.email;
+        user.picture=payload.picture;
+        // console.log(user);
     }
-));
+
+    verify()
+    .then(()=>{
+        _db.collection('account').insertOne(user,function(err, collection){
+            if (err) throw err;
+            console.log("Record inserted Successfully");
+                  
+        });
+        req.user = user;
+        next();
+    })
+    .catch(err=>{
+        res.redirect('/login');
+    })
+}
 
 module.exports = router;
